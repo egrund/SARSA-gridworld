@@ -5,10 +5,11 @@ import os
 
 def clearConsole():
     '''
-    clear the console
+    clears the console
     '''
     command = 'clear'
-    if os.name in ('nt', 'dos'):  # If Machine is running on Windows, use cls
+    # If Machine is running on Windows, use cls
+    if os.name in ('nt', 'dos'): 
         command = 'cls'
     os.system(command)
 
@@ -16,14 +17,10 @@ def clearConsole():
 class Gridworld:
     """
     This methods creates a gridworld for a RL algorithm
-    Attributes: 
-        initial state
-        current state
-        initial agent
-        current agent
+
+
     """
     
-     # Constructor
     def __init__(self,x_dim = 5, y_dim = 5, epsilon = 0.1, start = [0,0], terminal = [4,0],
                  neg_reward=[[0,4,-1],[2,1,-1],[4,4,-1]],
                 barrier = [[1,2],[2,0],[2,3]]):
@@ -170,8 +167,7 @@ class Gridworld:
         visualizes the current state
         """
         
-        #os.system('cls') # for Windows
-        clearConsole() # should always work
+        clearConsole()
         print("")
         
         for y in range(self.y_dim):

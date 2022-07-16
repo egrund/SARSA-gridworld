@@ -9,14 +9,16 @@ class SARSAn:
     """
     Implements Tabular n-step SARSA to solve the Gridworld
 
+    Policy: epsilon-greedy policy
+
     """
     
-    def __init__(self,gridworld,n=10,epsilon=0.5,gamma = 0.99,alpha = 0.3,visualize_policy = True,visualize_grid = True):
+    def __init__(self,gridworld,n=10,epsilon=0.5,decreasing_epsilon = False,gamma = 0.99,alpha = 0.3,visualize_policy = False,visualize_grid = True):
         """
         Arguments:
             gridworld = Gridworld objekt : the environment, we are going to learn
             n (int > 0) : amounts of steps
-            epsilon (0<= float <= 1) = for the e-greedy policy
+            epsilon (0<= float <= 1) = for the epsilon-greedy policy
             gammma (0<= float <= 1) = discount for future rewards
             alpha (0<= float <= 1) = stepsize (learning rate)
             visualize_always (bool) = if we visuale the policy only after each episode (False) or after each change (True) (might be time intensive)
@@ -29,6 +31,7 @@ class SARSAn:
         self.alpha = alpha # step size (learning rate)
         self.visualize_policy = visualize_policy # because learning is slow when visualized
         self.visualize_grid = visualize_grid
+        self.decreasing_epsilon = decreasing_epsilon
         
         # take values from gridworld
         
@@ -41,6 +44,11 @@ class SARSAn:
         
         # prepare for visualization
         if self.visualize_policy:
+            # go in interactive mode  
+            plt.ion() 
+            # show visualizatin without blocking the caluclations
+            plt.show(block=False)
+
             self.fig, self.axes = plt.subplots(3,3, num ='SARSAn State')
             for ax in self.axes.flat:
                 ax.axis('off')
@@ -64,7 +72,7 @@ class SARSAn:
             action_index = np.random.choice(range(len(self.gridworld.getActions())))
         return action_index
         
-    def episode(self,e="manually"):
+    def episode(self,e = "manually"):
         """
         creates one episode of the n-Step SARSA algorithm
         Attributes: 
@@ -147,6 +155,7 @@ class SARSAn:
                 tau += 1                                 
                 
             t += 1
+
         # reset the gridworld for next round
         self.gridworld.reset()
         
@@ -182,7 +191,7 @@ class SARSAn:
         plt.draw()
         pylab.pause(1.e-6) # important, do not delete
        
-    def start(self,episodes=10):
+    def start(self,episodes=10,evaluation = True):
         '''
         Starts the Learning Process and does episodes amounds of episodes        
         '''
@@ -195,7 +204,18 @@ class SARSAn:
         # do the learning
         for e in range(episodes):
             average_return[e], returns[e], steps[e] = self.episode(e+1)
-           
-        # print statistic average return
-        for e in range(episodes):
-            print("Episode",("       " + str(e+1))[-7:],"; Average Return: ", (str(average_return[e]) + "                 ")[:10], "Return: ", ("        " + str(returns[e]) )[-10:], "Steps: ", ("        " + str(steps[e]) )[-10:])
+
+            # calculate new epsilon, should be 0 at the end
+            if self.decreasing_epsilon:
+                self.epsilon -= self.epsilon / episodes
+
+        # visualizing only works if not visualize_poliy
+        if evaluation: 
+            # print statistic average return
+            for e in range(episodes):
+                print("Episode",("       " + str(e+1))[-7:],"; Average Return: ", (str(average_return[e]) + "                 ")[:10], "; Return: ", ("        " + str(returns[e]) )[-10:], "; Steps: ", ("        " + str(steps[e]) )[-10:])
+
+            plt.plot(returns, label = "Total Returns")
+            plt.plot(steps, label = "Steps")
+            plt.legend()
+            plt.show()

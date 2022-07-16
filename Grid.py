@@ -18,7 +18,15 @@ class Gridworld:
     """
     This methods creates a gridworld for a RL algorithm
 
+    Reward function: 
+        10 for terminal state
+        user input for neg reward field (default -1)
+        -0.5 for invalid move (against barrier or outside of gridworld)
+        -0.1 for each move where you do not get any other reward
 
+    State transition function: 
+        take random action with probabilitiy epsilon
+        take given action with probabilitiy 1- epsilon
     """
     
     def __init__(self,x_dim = 5, y_dim = 5, epsilon = 0.1, start = [0,0], terminal = [4,0],
@@ -149,13 +157,14 @@ class Gridworld:
             x += 1
            
         # gets the reward later
-        reward = -0.1
+        reward = -0.1 # for eachs step done
         
         # check if action is valid, then do action
         if self.isValid(x,y):
             self.agent = [y,x]
             reward = self.world[self.agent[0],self.agent[1]]
         else:
+            # for invalid move (on barrier or outside of gridworld)
             reward = -0.5
         
         # return state of agent, reward, if new state is terminal

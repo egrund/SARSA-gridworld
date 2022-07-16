@@ -1,4 +1,3 @@
-#imports
 import numpy as np
 import matplotlib.pyplot as plt
 import matplotlib.patheffects as PathEffects
@@ -9,9 +8,10 @@ import Grid
 class SARSAn:
     """
     Implements Tabular n-step SARSA to solve the Gridworld
+
     """
     
-    def __init__(self,gridworld,n=10,epsilon=0.5,gamma = 0.99,alpha = 0.3,visualize_always = False):
+    def __init__(self,gridworld,n=10,epsilon=0.5,gamma = 0.99,alpha = 0.3,visualize_policy = True,visualize_grid = True):
         """
         Arguments:
             gridworld = Gridworld objekt : the environment, we are going to learn
@@ -27,7 +27,8 @@ class SARSAn:
         self.epsilon = epsilon # e-greedy policy, with decreasing epsilon
         self.gamma = gamma # discount for future rewards
         self.alpha = alpha # step size (learning rate)
-        self.visualize_always = visualize_always # because learning is slow when visualized
+        self.visualize_policy = visualize_policy # because learning is slow when visualized
+        self.visualize_grid = visualize_grid
         
         # take values from gridworld
         
@@ -39,10 +40,11 @@ class SARSAn:
         self.q[:,terminal[0],terminal[1]] = [0,0,0,0] # [y,x] here
         
         # prepare for visualization
-        self.fig, self.axes = plt.subplots(3,3, num ='SARSAn State')
-        for ax in self.axes.flat:
-            ax.axis('off')
-        self.visualize()
+        if self.visualize_policy:
+            self.fig, self.axes = plt.subplots(3,3, num ='SARSAn State')
+            for ax in self.axes.flat:
+                ax.axis('off')
+            self.visualize()
              
     def policy(self,state):
         """
@@ -81,18 +83,21 @@ class SARSAn:
         tau = 0 # where we are updating the policy, because always behind t
         big_T = np.inf # where the Terminal state in the episode is
         
-        # safe amount of steps needed for ending table of start()
+        # safe amount of steps to calculate average return
         steps = 0
+        returns = 0
         
         # print Gridworld and episode
-        self.gridworld.visualize()
-        print("Epsiode:",e)        
+        if self.visualize_grid:
+            self.gridworld.visualize()
+            print("Epsiode:",e)        
         
         at_terminal = False                           
         while(not at_terminal):
                             
             # make step and observe newState and reward
-            s, r, at_terminal = self.gridworld.step(a[t])                
+            s, r, at_terminal = self.gridworld.step(a[t])     
+            returns += r       
             steps+=1 # one step done
             # selection next action
             a = np.append(a,[self.policy(s)],axis=0)
@@ -102,8 +107,9 @@ class SARSAn:
             reward = np.append(reward,[r],axis=0) # reward[t]
 
             # print Gridworld and episode
-            self.gridworld.visualize()
-            print("Epsiode:",e)        
+            if self.visualize_grid:
+                self.gridworld.visualize()
+                print("Epsiode:",e)        
             
             if at_terminal:
                 big_T = t+1
@@ -138,20 +144,19 @@ class SARSAn:
                 self.q[a[tau],state[tau][0],state[tau][1]] += self.alpha * (G - self.q[a[tau],state[tau][0],state[tau][1]] )               
             
                 # next step, update next values
-                tau += 1
-                # after each update only visualize new if wanted
-                if self.visualize_always:
-                    self.visualize()                      
+                tau += 1                                 
                 
             t += 1
         # reset the gridworld for next round
         self.gridworld.reset()
         
-        # at the end of one episode always visualize the policy
-        self.visualize()
+        # at the end of one episode visualize the policy
+        if self.visualize_policy:
+            self.visualize()  
+
+        average_return = returns / steps
         
-        
-        return steps
+        return average_return, returns, steps
             
         
     def visualize(self):
@@ -176,37 +181,21 @@ class SARSAn:
         self.fig.suptitle("Policy ",fontsize=18)
         plt.draw()
         pylab.pause(1.e-6) # important, do not delete
-        
-
        
     def start(self,episodes=10):
         '''
         Starts the Learning Process and does episodes amounds of episodes        
         '''
-        
-        steps = np.array(range(episodes)) # to safe how many steps per episode
+
+        # to save values for each episode
+        average_return = np.array(range(episodes),dtype=np.float64)
+        returns = np.array(range(episodes))
+        steps = np.array(range(episodes))
         
         # do the learning
         for e in range(episodes):
-            steps[e] = self.episode(e+1)
+            average_return[e], returns[e], steps[e] = self.episode(e+1)
            
-        # print statistic how many steps needed per episode
+        # print statistic average return
         for e in range(episodes):
-            print("Episode",("       " + str(e+1))[-7:],"; Steps: ", ("          " + str(steps[e]))[-10:])
-        
-        
-if __name__ == "__main__":
-    # go in interactive mode  
-    plt.ion() 
-    # create world
-    world = Grid.Gridworld()
-    # create Monte Carlo without Exploring Starts Agent
-    # player = SARSAn(gridworld=world,n = np.inf,alpha = 1, epsilon= 0.05)
-
-    # create n-step SARSA Agent
-    player = SARSAn(gridworld=world,n=10,epsilon=0.5,gamma = 0.99,alpha = 0.3)
-    # show visualizatin without blocking the caluclations
-    plt.show(block=False)
-    
-    # learn
-    player.start(100)
+            print("Episode",("       " + str(e+1))[-7:],"; Average Return: ", (str(average_return[e]) + "                 ")[:10], "Return: ", ("        " + str(returns[e]) )[-10:], "Steps: ", ("        " + str(steps[e]) )[-10:])

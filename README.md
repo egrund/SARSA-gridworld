@@ -2,7 +2,8 @@
 This is an implementation of n-step SARSA and a gridworld to be solved by it. <br />
 Author: Eosandra Grund <br />
 Date last modified: 20.07.2022 <br />
-Sample execution code in `Main_SARSA.py` <br />
+Sample execution code in [Main_SARSA.py](Main_SARSA.py) <br />
+Documentation created with pdoc3 in folder documentation.
 
 ## The Gridworld
 <img src="Images/Gridworld_at_start_for_README.jpg" align="left" alt="Viszalization of the gridworld" width="300"/>
@@ -12,8 +13,8 @@ X = barrier <br />
 numbers = rewards at the field <br />
 <br clear="left"/>
 
-The class Gridworld is implemented in the File `Grid.py`. The constructor gets a dictionary with the layout.
-There are some hardcoded gridworld dictionaries in the `Gridworlds.py` file(access via class variable `Gridworlds.GRIDWORLD[index]`), but you can also create your own ones.  
+The class Gridworld is implemented in the File [Grid.py](Grid.py). The constructor gets a dictionary with the layout. Check the dictionary structure in the [documentation](documentation/Gridworlds.html).
+There are some hardcoded gridworld dictionaries in the [Gridworlds.py](Gridworlds.py) file(access via class variable `Gridworlds.GRIDWORLD[index]`), but you can also create your own ones.  
 A Gridworld has a starting state, a terminal state (with a positive reward of 10), some other negative rewards and barriers.
 Possible actions are _up_, _down_, _left_ and _right_.
  
@@ -29,7 +30,7 @@ The gridworld will be visualized via the consol, but because it is always printe
 the old prints can be removed and it stays in the same place.
 
 ## The Agent
-The agent is in the `SARSAn.py` file. It is an implementation of the reinforcement-learning algorithm [n-step SARSA](https://towardsdatascience.com/introduction-to-reinforcement-learning-rl-part-7-n-step-bootstrapping-6c3006a13265) and can also do 1-step SARSA and MonteCarlo.
+The agent is in the [SARSAn.py](SARSAn.py) file. It is an implementation of the reinforcement-learning algorithm [n-step SARSA](https://towardsdatascience.com/introduction-to-reinforcement-learning-rl-part-7-n-step-bootstrapping-6c3006a13265) and can also do 1-step SARSA and MonteCarlo.
 
 It uses an epsilon-greedy policy with the possibility of decreasing the exploration over time (set `decreasing_epsilon = True`).
 

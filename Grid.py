@@ -1,9 +1,9 @@
 '''
-    File name: Grid.py
-    Author: Eosandra Grund
-    Date created: 20.04.2022
-    Date last modified: 20.07.2022
-    Python Version: 3.8.12
+    File name: Grid.py  
+    Author: Eosandra Grund  
+    Date created: 20.04.2022  
+    Date last modified: 20.07.2022  
+    Python Version: 3.8.12  
 '''
 
 import numpy as np
@@ -25,51 +25,50 @@ class Gridworld:
     """
     This methods creates a gridworld for a RL algorithm
 
-    Reward function: 
-        10 for the terminal state
-        user input for neg reward field
-        -0.5 for invalid move (against barrier or outside of the gridworld)
-        -0.1 for each move where you do not get any other reward
+    ### Reward function:   
+        10 for the terminal state  
+        user input for neg reward field  
+        -0.5 for invalid move (against barrier or outside of the gridworld)    
+        -0.1 for each move where you do not get any other reward  
 
-    State transition function: 
-        take random action with probabilitiy epsilon
-        take given action with probabilitiy 1- epsilon
+    ### State transition function:     
+        take random action with probabilitiy epsilon  
+        take given action with probabilitiy 1- epsilon  
 
-    Attributes:
-        x_dim (int>0) : x dimension of gridworld
-        y_dim (int>0) : y dimension of gridworld
-        epsilon (0<float<1) : for epsilon-greedy state transition function
-        agent (list) : [y,x] coordinates of the current agent
-        initial_agent (list) : [y,x] coordinates of the starting state
-        terminal (list) : [y,x] coordinates of the terminal state
-        action (list) : list of all the possible actions in order as strings
-        world (2D list) : [y][x] with values for all states being int for rewards and np.NaN for barriers
+    ### Attributes:     
+        x_dim (int>0) : x dimension of gridworld   
+        y_dim (int>0) : y dimension of gridworld   
+        epsilon (0<float<1) : for epsilon-greedy state transition function   
+        agent (list) : [y,x] coordinates of the current agent   
+        initial_agent (list) : [y,x] coordinates of the starting state   
+        terminal (list) : [y,x] coordinates of the terminal state   
+        action (list) : list of all the possible actions in order as strings   
+        world (2D list) : [y][x] with values for all states being int for rewards and np.NaN for barriers   
     """
     
     def __init__(self,gridworld = Gridworlds.Gridworlds.GRIDWORLD1):
         """
-        Initializes a gridworld with all parameters
-        gives one positive reward in the terminal state
-        state transition funktion: probability epsilon of going in a random different state
+        Initializes a gridworld with all parameters   
+        gives one positive reward in the terminal state    
         all states as [y,x] in the code, in constructor parameters as [x,y] for convenience
         
-        # create an empty grid world default hardcoded some examples in Gridworlds 
-        # e.g. GRIDWORLD0 : 
+        create an empty grid world default hardcoded some examples in Gridworlds 
+        e.g. GRIDWORLD0 : 
         
-        #  s  0  X  0 10
-        #  0  0 -1  0  0
-        #  0  X  0  0  0
-        #  0  0  X  0  0
-        # -1  0  0  0 -1
+         s  0  X  0 10   
+         0  0 -1  0  0   
+         0  X  0  0  0   
+         0  0  X  0  0   
+        -1  0  0  0 -1   
         
-        Keys in the dictionary gridworld:
-            x_dim (int>0) : x dimension of gridworld
-            y_dim (int>0) : y dimension of gridworld
-            epsilon (0<float<1) : for epsilon-greedy state transition function
-            start [x,y] = starting state of agent for each episode
-            terminal [x,y] = terminal state with a positive reward
-            neg_rewards [[x,y,reward],[x,y,reward],...] = list of fields with negative rewards
-            barrier [[x,y],[x,y],...] = list of fields that are barriers
+        ### Keys in the dictionary gridworld:   
+            x_dim (int>0) : x dimension of gridworld  
+            y_dim (int>0) : y dimension of gridworld  
+            epsilon (0<float<1) : for epsilon-greedy state transition function  
+            start [x,y] = starting state of agent for each episode  
+            terminal [x,y] = terminal state with a positive reward  
+            neg_rewards [[x,y,reward],[x,y,reward],...] = list of fields with negative rewards  
+            barrier [[x,y],[x,y],...] = list of fields that are barriers  
         """
         
         self.x_dim = gridworld["x_dim"]

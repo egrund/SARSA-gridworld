@@ -1,50 +1,49 @@
 '''
-    File name: SARSAn.py
-    Author: Eosandra Grund
-    Date created: 23.04.2022
-    Date last modified: 20.07.2022
-    Python Version: 3.8.12
+    File name: SARSAn.py   
+    Author: Eosandra Grund   
+    Date created: 23.04.2022   
+    Date last modified: 20.07.2022   
+    Python Version: 3.8.12   
 '''
 
 import numpy as np
 import matplotlib.pyplot as plt
-#import matplotlib.patheffects as PathEffects
 import matplotlib.pylab as pylab
 import Grid
 
 # with pseudocode from book
 class SARSAn:
     """
-    Implements Tabular n-step SARSA to solve the Gridworld
+    Implements Tabular n-step SARSA to solve the Gridworld   
 
-    Policy: epsilon-greedy policy
+    Policy: epsilon-greedy policy   
 
-    remove visualizations for better performance
+    remove visualizations for better performance   
 
-    Attributes: 
-        gridworld = Gridworld objekt : the environment, we are going to learn
-        n (int > 0) : amounts of steps
-        epsilon (0<= float <= 1) = for the epsilon-greedy policy
-        decreasing_epsilon (bool) = if true decreasing epsilon after each episode, so we do more exploration at the beginning and more exploitation at the end
-        gammma (0<= float <= 1) = discount for future rewards
-        alpha (0<= float <= 1) = stepsize (learning rate)
-        visualize_policy (bool) = if the policy should be visualized after each episode with pyplot
-        visualize_grid (bool) = if the grid should be visualized after each step
-        q (np.array(shape(len(action) , y , x))) = the q-values (state-action values)
+    ### Attributes:    
+        gridworld = Gridworld objekt : the environment, we are going to learn   
+        n (int > 0) : amounts of steps   
+        epsilon (0<= float <= 1) = for the epsilon-greedy policy   
+        decreasing_epsilon (bool) = if true decreasing epsilon after each episode, so we do more exploration at the beginning and more exploitation at the end   
+        gammma (0<= float <= 1) = discount for future rewards    
+        alpha (0<= float <= 1) = stepsize (learning rate)   
+        visualize_policy (bool) = if the policy should be visualized after each episode with pyplot   
+        visualize_grid (bool) = if the grid should be visualized after each step     
+        q (np.array(shape(len(action) , y , x))) = the q-values (state-action values)   
 
     """
     
     def __init__(self,gridworld,n=10,epsilon=0.5,decreasing_epsilon = False,gamma = 0.99,alpha = 0.3,visualize_policy = False,visualize_grid = True):
         """
-        Arguments:
-            gridworld = Gridworld objekt : the environment, we are going to learn
-            n (int > 0) : amounts of steps
-            epsilon (0<= float <= 1) = for the epsilon-greedy policy
-            decreasing_epsilon (bool) = if true decreasing epsilon after each episode, so we do more exploration at the beginning and more exploitation at the end
-            gammma (0<= float <= 1) = discount for future rewards
-            alpha (0<= float <= 1) = stepsize (learning rate)
-            visualize_policy (bool) = if the policy should be visualized after each episode with pyplot
-            visualize_grid (bool) = if the grid should be visualized after each step
+        ### Arguments:   
+            gridworld = Gridworld objekt : the environment, we are going to learn   
+            n (int > 0) : amounts of steps   
+            epsilon (0<= float <= 1) = for the epsilon-greedy policy   
+            decreasing_epsilon (bool) = if true decreasing epsilon after each episode, so we do more exploration at the beginning and more exploitation at the end   
+            gammma (0<= float <= 1) = discount for future rewards   
+            alpha (0<= float <= 1) = stepsize (learning rate)   
+            visualize_policy (bool) = if the policy should be visualized after each episode with pyplot   
+            visualize_grid (bool) = if the grid should be visualized after each step   
         """
         
         self.gridworld = gridworld
@@ -78,12 +77,12 @@ class SARSAn:
             self.visualize()
              
     def policy(self,state):
-        """
-        gives back an action according to the given state and current policy
-        Attributes: 
-            state [x,y] = starting state
-        return: 
-            action_index (int 0- len(action)) = index of action
+        """ gives back an action according to the given state and current policy   
+
+        ### Attributes: 
+            state [x,y] = starting state   
+        ### return:    
+            action_index (int 0- len(action)) = index of action   
         """
         
         # calculate best action after policy
@@ -96,10 +95,10 @@ class SARSAn:
         return action_index
         
     def episode(self,e = "manually"):
-        """
-        creates one episode of the n-Step SARSA algorithm
-        Attributes: 
-            e = When using the Start method, to print which episode we are in
+        """ creates one episode of the n-Step SARSA algorithm   
+
+        ### Attributes:     
+            e = When using the Start method, to print which episode we are in   
         """
         
         # reset the environment gridworld and initialize states array
@@ -194,9 +193,7 @@ class SARSAn:
             
         
     def visualize(self):
-        """
-        visualizes the current policy
-        """
+        """ visualizes the current policy """
             
         for i, action in enumerate(self.gridworld.getActions()):
             ax = self.axes.flat[2*i + 1]
@@ -217,12 +214,11 @@ class SARSAn:
         pylab.pause(1.e-6) # important, do not delete
        
     def start(self,episodes=10,evaluation = True):
-        '''
-        Starts the Learning Process and does episodes amounds of episodes  
+        ''' Starts the Learning Process and does episodes amounds of episodes   
 
-        Arguments: 
-            episodes (int >=1 ) = the amount of episodes to do  
-            evaluation (bool) = if you want a list and plot of the total return and steps per episodes at the end (only works if visualize_policy == False)
+        ### Arguments:    
+            episodes (int >=1 ) = the amount of episodes to do     
+            evaluation (bool) = if you want a list and plot of the total return and steps per episodes at the end (only works if visualize_policy == False)   
         '''
 
         # to save values for each episode

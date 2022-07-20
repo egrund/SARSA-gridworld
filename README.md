@@ -1,5 +1,5 @@
 # SARSA-gridworld
-This is an implementation of n-step SARSA an a gridworld to be solved by it. <br />
+This is an implementation of n-step SARSA and a gridworld to be solved by it. <br />
 Author: Eosandra Grund <br />
 Date last modified: 20.07.2022 <br />
 Sample execution code in `Main_SARSA.py` <br />
@@ -57,7 +57,8 @@ player = SARSAn.SARSAn(
 	gridworld=world, 
 	n=10, epsilon=0.5, 
 	decreasing_epsilon = False, 
-	gamma = 0.99, alpha = 0.3, 
+	gamma = 0.99, 
+	alpha = 0.3, 
 	visualize_policy = False, 
 	visualize_grid = True)
 player.start(episodes = 50, evaluation = True)
@@ -67,4 +68,8 @@ Create an MonteCarlo approach by executing this instead of the last cell.
 ``` python
 player = SARSAn(gridworld=world,n = np.inf, epsilon= 0.05,alpha = 1)
 player.start(episodes = 50, evaluation = True)
+```
+You can export your pyplot plots by executing the following lines after the learning is done. (Only the plots you will see during learning will be in the picture)
+``` python
+plt.savefig("Figure_SARSA_policy_returns.png")
 ```

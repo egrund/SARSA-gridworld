@@ -73,7 +73,7 @@ which_gridworld = 0
 world = Grid.Gridworld(Gridworlds.Gridworlds.GRIDWORLD[which_gridworld])
 world.visualize()
 ```
-Decide which default world by changing `which_gridworld` to any value between 0 and 4.<br />
+Decide which default world by changing `which_gridworld` to any value between 0 and 4. The gridworld on the picture above is gridworld 0. <br />
 
 Creation of player and learning start
 ``` python
@@ -87,7 +87,7 @@ player = SARSAn.SARSAn(
 	visualize_grid = True)
 player.start(episodes = 50, evaluation = True)
 ```
-That means it is an 10-step SARSA solving Gridworld 0 (the one on the pictures). You can change all of the parameters and see what happens. But changing them can cause the algorithm to be inefficient or not learning.<br />
+That means it is an 10-step SARSA solving Gridworld 0. You can change all of the parameters and see what happens. But changing them can cause the algorithm to be inefficient or not learning.<br />
 Create an MonteCarlo approach by executing this instead of the last cell.
 ``` python
 player = SARSAn.SARSAn(gridworld=world,n = np.inf, epsilon= 0.3,alpha = 1)

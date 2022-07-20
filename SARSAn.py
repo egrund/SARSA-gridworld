@@ -8,7 +8,7 @@
 
 import numpy as np
 import matplotlib.pyplot as plt
-import matplotlib.patheffects as PathEffects
+#import matplotlib.patheffects as PathEffects
 import matplotlib.pylab as pylab
 import Grid
 
@@ -20,6 +20,17 @@ class SARSAn:
     Policy: epsilon-greedy policy
 
     remove visualizations for better performance
+
+    Attributes: 
+        gridworld = Gridworld objekt : the environment, we are going to learn
+        n (int > 0) : amounts of steps
+        epsilon (0<= float <= 1) = for the epsilon-greedy policy
+        decreasing_epsilon (bool) = if true decreasing epsilon after each episode, so we do more exploration at the beginning and more exploitation at the end
+        gammma (0<= float <= 1) = discount for future rewards
+        alpha (0<= float <= 1) = stepsize (learning rate)
+        visualize_policy (bool) = if the policy should be visualized after each episode with pyplot
+        visualize_grid (bool) = if the grid should be visualized after each step
+        q (np.array(shape(len(action) , y , x))) = the q-values (state-action values)
 
     """
     
@@ -91,19 +102,19 @@ class SARSAn:
             e = When using the Start method, to print which episode we are in
         """
         
-        # reset the environment gridworld and initialize s
-        state = np.array([self.gridworld.reset()],dtype=int) # [[y,x],[y,x]]
+        # reset the environment gridworld and initialize states array
+        state = np.array([self.gridworld.reset()],dtype=int) # [[y,x],[y,x],...]
         
         # initialize n, a (actions trajectory) and reward (reward trajectory)
         n = self.n # n-step SARSA
-        a = np.array([self.policy(state[0])], dtype=int)
+        action = np.array([self.policy(state[0])], dtype=int)
         reward = np.empty(shape=(0), dtype=int)
         
         t = 0 # in which step the agent is
-        tau = 0 # where we are updating the policy, because always behind t
-        big_T = np.inf # where the Terminal state in the episode is
+        t_update = 0 # where we are updating the policy, because always behind t (tau in formula)
+        terminal_state_index = np.inf # where the Terminal state in the episode is, if we found it (T in formula)
         
-        # safe amount of steps to calculate average return
+        # for calculating average return
         steps = 0
         returns = 0
         
@@ -116,11 +127,11 @@ class SARSAn:
         while(not at_terminal):
                             
             # make step and observe newState and reward
-            s, r, at_terminal = self.gridworld.step(a[t])     
+            s, r, at_terminal = self.gridworld.step(action[t])     
             returns += r       
             steps+=1 # one step done
             # selection next action
-            a = np.append(a,[self.policy(s)],axis=0)
+            action = np.append(action,[self.policy(s)],axis=0)
             
             # remember state and reward for later policy updates
             state = np.append(state,[s],axis=0) # state[t+1]
@@ -132,46 +143,48 @@ class SARSAn:
                 print("Epsiode:",e)        
             
             if at_terminal:
-                big_T = t+1
+                terminal_state_index = t+1
             
-            #t += 1 # already next so tau + n = t + 1
+            #t += 1 # already next so t_update + n = t + 1
             # update the estimates
 
             visited_states = []
 
-            while at_terminal or tau + n <= t :
+            while at_terminal or t_update + n <= t :
 
                 # we do not want to update the terminal state
-                if np.mean(np.equal(state[tau],np.array(self.gridworld.getTerminal()))) == 1:
+                if np.mean(np.equal(state[t_update],np.array(self.gridworld.getTerminal()))) == 1:
                     break
                 
                 
                 # implement first visited check
                 for visited_state in visited_states:
-                    if np.mean(np.equal(state[tau],visited_state)) == 1:
+                    if np.mean(np.equal(state[t_update],visited_state)) == 1:
                         break
 
-                visited_states.append(state[tau])
+                visited_states.append(state[t_update])
 
                 # calcualte value for n steps or until the terminal if found
-                G = np.sum([self.gamma**(i-tau) * reward[i] for i in range(tau,min(tau+n,big_T))])
-                
-                if tau+n < big_T: # if we are not yet at the terminals tate
+                mc_estimate = np.sum([self.gamma**(i-t_update) * reward[i] for i in range(t_update,min(t_update+n,terminal_state_index))])
+                future_estimate = 0
+
+                if t_update+n < terminal_state_index: # if we are not yet at the terminals state
                     # calculate the estimate after n
-                    G += self.gamma**n * self.q[a[tau+n],state[tau+n][0],state[tau+n][1]] # y,x
+                    future_estimate =  self.gamma**n * self.q[action[t_update+n],state[t_update+n][0],state[t_update+n][1]] # y,x
+
+                estimate = mc_estimate + future_estimate
                     
                 # improve policy
-                self.q[a[tau],state[tau][0],state[tau][1]] += self.alpha * (G - self.q[a[tau],state[tau][0],state[tau][1]] )               
+                self.q[action[t_update],state[t_update][0],state[t_update][1]] += self.alpha * (estimate - self.q[action[t_update],state[t_update][0],state[t_update][1]] )               
             
-                # next step, update next values
-                tau += 1                                 
+                t_update += 1                                 
                 
             t += 1
 
-        # reset the gridworld for next round
+        # end of one episode
+
         self.gridworld.reset()
         
-        # at the end of one episode visualize the policy
         if self.visualize_policy:
             self.visualize()  
 

@@ -6,8 +6,7 @@
     Python Version: 3.8.12
 '''
 
-import numpy as np
-import time 
+import numpy as npd
 import os
 import Gridworlds
 

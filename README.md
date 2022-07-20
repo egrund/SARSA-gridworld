@@ -12,8 +12,10 @@ X = barrier <br />
 numbers = rewards at the field <br />
 <br clear="left"/>
 
-The class Gridworld is implemented in the File `Grid.py`. The Constructor gets a dictionary with the layout. There are some hardcoded gridworld dictionaries in the `Gridworlds.py` file(access via class variable `Gridworlds.GRIDWORLD[index]`), to use, but you can also create your own ones.  
-A Gridworld has a starting state, a terminal state (with a positive reward of 10), some other negative rewards and barriers. Possible actions are _up_, _down_, _left_ and _right_.
+The class Gridworld is implemented in the File `Grid.py`. The constructor gets a dictionary with the layout.
+There are some hardcoded gridworld dictionaries in the `Gridworlds.py` file(access via class variable `Gridworlds.GRIDWORLD[index]`), to use, but you can also create your own ones.  
+A Gridworld has a starting state, a terminal state (with a positive reward of 10), some other negative rewards and barriers.
+Possible actions are _up_, _down_, _left_ and _right_.
  
 State transition function: In the environment you take the given action with the probabiliy 1-`epsilon` and a random action with probability `epsilon`. 
 
@@ -23,7 +25,8 @@ Reward function:
 * -0.5 for invalid moves (against barriers or outside of the gridworld)
 * -0.1 for every move (if no other reward)
 
-The gridworld will be visualized via the consol, but because it is always printed new for each step, it is best to **execute it in a terminal** so the old prints can be removed and it stays in the same place.
+The gridworld will be visualized via the consol, but because it is always printed new for each step, it is best to **execute it in a terminal** so
+the old prints can be removed and it stays in the same place.
 
 ## The Agent
 The Agent is in the `SARSAn.py` file. It is an implementation of the reinforcement-learning algorithm [n-step SARSA](https://towardsdatascience.com/introduction-to-reinforcement-learning-rl-part-7-n-step-bootstrapping-6c3006a13265) and can also do 1-step SARSA and MonteCarlo.
@@ -42,7 +45,16 @@ list of the average return, total return and steps per episode
 plot of the total return and steps per episode ( The plot does only work if `visualize_policy = False`)
 <br clear="left"/>
 
-## Main_SARSA.py
+## How to execute
+You can use or modify Main_SARSA.py and execute it in the terminal.
+Imports
+```python
+import matplotlib.pyplot as plt
+import numpy as np
+import SARSAn
+import Grid
+import Gridworlds
+```
 Creation of the Gridworld
 ```python
 which_gridworld = 0
@@ -63,7 +75,7 @@ player = SARSAn.SARSAn(
 	visualize_grid = True)
 player.start(episodes = 50, evaluation = True)
 ```
-That means it is an 10-step SARSA solving Gridworld 0 (the one on the pictures). You can change all of the parameters and see what happens. But changing them might make the algorithm inefficient or even not working anymore.<br />
+That means it is an 10-step SARSA solving Gridworld 0 (the one on the pictures). You can change all of the parameters and see what happens. But changing them cause the algorithm to be inefficient or even failing.<br />
 Create an MonteCarlo approach by executing this instead of the last cell.
 ``` python
 player = SARSAn(gridworld=world,n = np.inf, epsilon= 0.05,alpha = 1)

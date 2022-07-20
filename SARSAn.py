@@ -122,7 +122,7 @@ class SARSAn:
             self.gridworld.visualize()
             print("Epsiode:",e)        
         
-        at_terminal = False                           
+        at_terminal = False                       
         while(not at_terminal):
                             
             # make step and observe newState and reward
@@ -147,7 +147,7 @@ class SARSAn:
             #t += 1 # already next so t_update + n = t + 1
             # update the estimates
 
-            visited_states = []
+            visited_states = [] # here enough because only for MC
 
             while at_terminal or t_update + n <= t :
 
@@ -156,11 +156,11 @@ class SARSAn:
                     break
                 
                 
-                # implement first visited check
-                for visited_state in visited_states:
-                    if np.mean(np.equal(state[t_update],visited_state)) == 1:
-                        break
-
+                # implement first visited check for Monte Carlo (Is this the first time we are here in this episode)
+                if(n == np.inf):
+                    for visited_state in visited_states:
+                        if np.mean(np.equal(state[t_update],visited_state)) == 1:
+                            break
                 visited_states.append(state[t_update])
 
                 # calcualte value for n steps or until the terminal if found
@@ -181,6 +181,7 @@ class SARSAn:
             t += 1
 
         # end of one episode
+        print("Epsiode:",e)  
 
         self.gridworld.reset()
         

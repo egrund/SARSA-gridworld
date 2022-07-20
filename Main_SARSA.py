@@ -20,10 +20,10 @@ if __name__ == "__main__":
     world.visualize()
 
     # create n-step SARSA Agent
-    player = SARSAn.SARSAn(gridworld=world, n=10, epsilon=0.5, decreasing_epsilon = False, gamma = 0.99, alpha = 0.3, visualize_policy = False, visualize_grid = True)
+    player = SARSAn.SARSAn(gridworld=world, n=10, epsilon=0.5, decreasing_epsilon = True, gamma = 0.99, alpha = 0.3, visualize_policy = False, visualize_grid = True)
     # or
     # create Monte Carlo without Exploring Starts Agent
-    # player = SARSAn.SARSAn(gridworld=world,n = np.inf, epsilon= 0.05,alpha = 1)
+    player = SARSAn.SARSAn(gridworld=world,n = np.inf, epsilon= 0.3, alpha = 1)
 
     # learn
     player.start(episodes = 50, evaluation = True)

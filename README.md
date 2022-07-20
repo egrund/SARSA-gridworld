@@ -1,5 +1,6 @@
 # SARSA-gridworld
 This is an implementation of n-step SARSA and a gridworld to be solved by it. <br />
+It was created for the course _Deep reinforcement learning_ <br />
 Author: Eosandra Grund <br />
 Date last modified: 20.07.2022 <br />
 Sample execution code in [Main_SARSA.py](Main_SARSA.py) <br />
@@ -13,8 +14,8 @@ X = barrier <br />
 numbers = rewards at the field <br />
 <br clear="left"/>
 
-The class Gridworld is implemented in the File [Grid.py](Grid.py). The constructor gets a dictionary with the layout.
-dictionary: 
+The class Gridworld is implemented in the File [Grid.py](Grid.py). The constructor gets a dictionary with the layout.<br />
+structure of the dictionary: 
 * x_dim (int>0) : x dimension of gridworld    
 *  y_dim (int>0) : y dimension of gridworld   
 * epsilon (0<float<1) : for epsilon-greedy state transition function   
@@ -39,7 +40,7 @@ The gridworld will be visualized via the consol, but because it is always printe
 the old prints can be removed and it stays in the same place.
 
 ## The Agent
-The agent is in the [SARSAn.py](SARSAn.py) file. It is an implementation of the reinforcement-learning algorithm [n-step SARSA](https://towardsdatascience.com/introduction-to-reinforcement-learning-rl-part-7-n-step-bootstrapping-6c3006a13265) and can also do 1-step SARSA and MonteCarlo.
+The agent is in the [SARSAn.py](SARSAn.py) file. It is an implementation of the reinforcement-learning algorithm [n-step SARSA](https://towardsdatascience.com/introduction-to-reinforcement-learning-rl-part-7-n-step-bootstrapping-6c3006a13265) and can also do 1-step SARSA and Monte Carlo.
 
 It uses an epsilon-greedy policy with the possibility of decreasing the exploration over time (set `decreasing_epsilon = True`).
 
@@ -56,6 +57,7 @@ plot of the total return and steps per episode ( The plot does only work if `vis
 <br clear="left"/>
 
 ## How to execute
+First you have to clone the repository.
 You can use or modify Main_SARSA.py and execute it in the terminal.<br />
 Imports
 ```python
@@ -78,7 +80,7 @@ Creation of player and learning start
 player = SARSAn.SARSAn(
 	gridworld=world, 
 	n=10, epsilon=0.5, 
-	decreasing_epsilon = False, 
+	decreasing_epsilon = True, 
 	gamma = 0.99, 
 	alpha = 0.3, 
 	visualize_policy = False, 
@@ -88,7 +90,7 @@ player.start(episodes = 50, evaluation = True)
 That means it is an 10-step SARSA solving Gridworld 0 (the one on the pictures). You can change all of the parameters and see what happens. But changing them can cause the algorithm to be inefficient or not learning.<br />
 Create an MonteCarlo approach by executing this instead of the last cell.
 ``` python
-player = SARSAn.SARSAn(gridworld=world,n = np.inf, epsilon= 0.05,alpha = 1)
+player = SARSAn.SARSAn(gridworld=world,n = np.inf, epsilon= 0.3,alpha = 1)
 player.start(episodes = 50, evaluation = True)
 ```
 You can export your pyplot plots by executing the following lines after the learning is done. (Only the plots you will see during learning will be in the picture)

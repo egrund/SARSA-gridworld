@@ -1,5 +1,0 @@
-check whether need first occurence of state also for sarsa or only for mc
-
-
-Possibilities: 
-- add Expected SARSA

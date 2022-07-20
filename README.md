@@ -27,15 +27,15 @@ The gridworld will be visualized via the consol, but because it is always printe
 ## The Agent
 The Agent is in the _SARSAn.py_ file. It is an implementation of the reinforcement-learning algorithm [n-step SARSA](https://towardsdatascience.com/introduction-to-reinforcement-learning-rl-part-7-n-step-bootstrapping-6c3006a13265) and can also do 1-step SARSA and MonteCarlo.
 
-It uses an epsilon-greedy policy with the possibility of it decreasing over time (set _decreasing_epsilon_ to True).
+It uses an epsilon-greedy policy with the possibility of decreasing the exploration over time (set _decreasing_epsilon_ to True).
 
-<img src="Images/Figure_SARSA_policy_for_README.png" align="left" alt="visualization of the policy" width="300"/>  
+<img src="Images/Figure_SARSA_policy_for_README.png" align="left" alt="visualization of the policy" width="350"/>  
 If you set _visualize_policy_ to True, the q-values will be visualized after each episode as a matplotlib heatmap showing all state-action values.
-<br clear="left"/>
+<br clear="left"/><br />
 
-Start the learning process with the start method.It gets the amount of _episodes_ you want to do and if you want an _evaluation_ as parameter. <br />
-<img src="Images/Gridworld_evaluation_list_for_README.jpg" align="left" alt="list of returns" width="300"/>
-<img src="Images/Figure_returns_for_README.png" alt="plot of returns" align="left" width="225"/>
+Start the learning process with the start method. As parameters it gets the amount of _episodes_ you want to do and if you want an _evaluation_. <br />
+<img src="Images/Gridworld_evaluation_list_for_README.jpg" align="left" alt="list of returns" width="350"/>
+<img src="Images/Figure_returns_for_README.png" alt="plot of returns" align="left" width="300"/>
 list and plot of the total return and steps per episode
 <br clear="left"/>
 

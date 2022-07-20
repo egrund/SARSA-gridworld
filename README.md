@@ -36,7 +36,7 @@ Reward function:
 * -0.5 for invalid moves (against barriers or outside of the gridworld)
 * -0.1 for every move (if no other reward)
 
-The gridworld will be visualized via stdout, and because old prints have to be removed so it stays in the same place, it is best to **execute it in a shell**.
+The gridworld will be visualized via stdout, and because old prints have to be removed so the gridworld stays in the same place, it is best to **execute everything in a shell**.
 
 ## The Agent
 The agent is in the [SARSAn.py](SARSAn.py) file. It is an implementation of the reinforcement-learning algorithm [n-step SARSA](https://towardsdatascience.com/introduction-to-reinforcement-learning-rl-part-7-n-step-bootstrapping-6c3006a13265) and can also do 1-step SARSA and Monte Carlo.

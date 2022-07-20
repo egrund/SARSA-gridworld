@@ -13,7 +13,16 @@ X = barrier <br />
 numbers = rewards at the field <br />
 <br clear="left"/>
 
-The class Gridworld is implemented in the File [Grid.py](Grid.py). The constructor gets a dictionary with the layout. Check the dictionary structure in the [documentation](documentation/Gridworlds.html).
+The class Gridworld is implemented in the File [Grid.py](Grid.py). The constructor gets a dictionary with the layout.
+dictionary: 
+* x_dim (int>0) : x dimension of gridworld    
+*  y_dim (int>0) : y dimension of gridworld   
+* epsilon (0<float<1) : for epsilon-greedy state transition function   
+* start [x,y] = starting state of agent for each episode   
+* terminal [x,y] = terminal state with a positive reward   
+* neg_rewards [[x,y,reward],[x,y,reward],...] = list of fields with negative rewards   
+* barrier [[x,y],[x,y],...] = list of fields that are barriers   
+
 There are some hardcoded gridworld dictionaries in the [Gridworlds.py](Gridworlds.py) file(access via class variable `Gridworlds.GRIDWORLD[index]`), but you can also create your own ones.  
 A Gridworld has a starting state, a terminal state (with a positive reward of 10), some other negative rewards and barriers.
 Possible actions are _up_, _down_, _left_ and _right_.
@@ -76,7 +85,7 @@ player = SARSAn.SARSAn(
 	visualize_grid = True)
 player.start(episodes = 50, evaluation = True)
 ```
-That means it is an 10-step SARSA solving Gridworld 0 (the one on the pictures). You can change all of the parameters and see what happens. But changing them cause the algorithm to be inefficient or even failing.<br />
+That means it is an 10-step SARSA solving Gridworld 0 (the one on the pictures). You can change all of the parameters and see what happens. But changing them can cause the algorithm to be inefficient or not learning.<br />
 Create an MonteCarlo approach by executing this instead of the last cell.
 ``` python
 player = SARSAn.SARSAn(gridworld=world,n = np.inf, epsilon= 0.05,alpha = 1)

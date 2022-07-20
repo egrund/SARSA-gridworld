@@ -11,6 +11,8 @@ class SARSAn:
 
     Policy: epsilon-greedy policy
 
+    remove visualizations for better performance
+
     """
     
     def __init__(self,gridworld,n=10,epsilon=0.5,decreasing_epsilon = False,gamma = 0.99,alpha = 0.3,visualize_policy = False,visualize_grid = True):
@@ -19,9 +21,11 @@ class SARSAn:
             gridworld = Gridworld objekt : the environment, we are going to learn
             n (int > 0) : amounts of steps
             epsilon (0<= float <= 1) = for the epsilon-greedy policy
+            decreasing_epsilon (bool) = if true decreasing epsilon after each episode, so we do more exploration at the beginning and more exploitation at the end
             gammma (0<= float <= 1) = discount for future rewards
             alpha (0<= float <= 1) = stepsize (learning rate)
-            visualize_always (bool) = if we visuale the policy only after each episode (False) or after each change (True) (might be time intensive)
+            visualize_policy (bool) = if the policy should be visualized after each episode with pyplot
+            visualize_grid (bool) = if the grid should be visualized after each step
         """
         
         self.gridworld = gridworld
@@ -176,7 +180,7 @@ class SARSAn:
         for i, action in enumerate(self.gridworld.getActions()):
             ax = self.axes.flat[2*i + 1]
             ax.cla() # add axis
-            ax.set(title = action) # set title
+            ax.set(title = action)
             ax.set_xticks(np.arange(self.gridworld.getXdim()))
             ax.set_yticks(np.arange(self.gridworld.getYdim()))
             ax.imshow(self.q[i,:,:], interpolation='None')
@@ -193,7 +197,11 @@ class SARSAn:
        
     def start(self,episodes=10,evaluation = True):
         '''
-        Starts the Learning Process and does episodes amounds of episodes        
+        Starts the Learning Process and does episodes amounds of episodes  
+
+        Arguments: 
+            episodes (int >=1 ) = the amount of episodes to do  
+            evaluation (bool) = if you want a list and plot of the total return and steps per episodes at the end (only works if visualize_policy == False)
         '''
 
         # to save values for each episode

@@ -1,4 +1,3 @@
-#imports
 import numpy as np
 import time 
 import os
@@ -20,9 +19,9 @@ class Gridworld:
     This methods creates a gridworld for a RL algorithm
 
     Reward function: 
-        10 for terminal state
-        user input for neg reward field (default -1)
-        -0.5 for invalid move (against barrier or outside of gridworld)
+        10 for the terminal state
+        user input for neg reward field
+        -0.5 for invalid move (against barrier or outside of the gridworld)
         -0.1 for each move where you do not get any other reward
 
     State transition function: 
@@ -46,7 +45,7 @@ class Gridworld:
         #  0  0  X  0  0
         # -1  0  0  0 -1
         
-        Attributes all keys in one dictionary:
+        Attributes all keys in the dictionary gridworld:
             x_dim (int>0) : x dimension of gridworld
             y_dim (int>0) : y dimension of gridworld
             epsilon (0<float<1) : for epsilon-greedy state transition function
@@ -59,7 +58,7 @@ class Gridworld:
         self.x_dim = gridworld["x_dim"]
         self.y_dim = gridworld["x_dim"]
         self.epsilon = gridworld["epsilon"]
-        self.agent = gridworld["start"].copy()# [y,x]
+        self.agent = gridworld["start"].copy()
         self.agent.reverse() # [y,x]
         self.initial_agent = self.agent # needed for reset
         self.terminal = gridworld["terminal"].copy()
@@ -230,21 +229,6 @@ class Gridworld:
         print(middleLine)
         print(line)
         print("")
-        
-        
-    def printGrid(grid):
-        """
-        prints the corresponding Gridworld (from Grid or number for Gridworlds) to the console
-        
-        Attributes:
-            grid = int (number of the grid) or dictionary directly or Grid object
-        """
-        
-        if type(grid) == int:
-            grid = Gridworlds.getGrid(grid)
-        if type(grid) == dict:
-            grid = Grid.Gridworld(grid)
-        if grid.isInstanceOf(Grid):
-            grid.visualize()
+
         
         

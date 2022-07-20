@@ -16,6 +16,7 @@ if __name__ == "__main__":
 
     # create world
     # world = Grid.Gridworld() # default is 0
+    # or
     which_gridworld = 1 # between 0 and 4 unless you add some more gridworlds to Gridworlds.Gridworlds.GRIDWORLD list
     world = Grid.Gridworld(Gridworlds.Gridworlds.GRIDWORLD[which_gridworld])
     world.visualize()

@@ -1,3 +1,11 @@
+'''
+    File name: Gridworlds.py
+    Author: Eosandra Grund
+    Date created: 18.07.2022
+    Date last modified: 20.07.2022
+    Python Version: 3.8.12
+'''
+
 class Gridworlds:
     """
     Contains some default gridworld for creating a Grid object. 

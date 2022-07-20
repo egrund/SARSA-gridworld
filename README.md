@@ -1,5 +1,7 @@
 # SARSA-gridworld
 This is an implementation of n-step SARSA an a gridworld to be solved by it
+Author: Eosandra Grund
+Date last modified: 20.07.2022
 
 The Gridworld
 -------------

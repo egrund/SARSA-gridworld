@@ -1,3 +1,11 @@
+'''
+    File name: Main_SARSA.py
+    Author: Eosandra Grund
+    Date created: 16.07.2022
+    Date last modified: 20.07.2022
+    Python Version: 3.8.12
+'''
+
 import matplotlib.pyplot as plt
 import numpy as np
 import SARSAn

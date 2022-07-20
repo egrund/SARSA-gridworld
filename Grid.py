@@ -1,3 +1,11 @@
+'''
+    File name: Grid.py
+    Author: Eosandra Grund
+    Date created: 20.04.2022
+    Date last modified: 20.07.2022
+    Python Version: 3.8.12
+'''
+
 import numpy as np
 import time 
 import os

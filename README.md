@@ -11,11 +11,11 @@ Documentation created with pdoc3 in folder documentation.
 double lines are the end of the gridworld, behind that (first row and last line) are x and y values <br />
 A = Agent <br />
 X = barrier <br />
-numbers = rewards at the field <br />
+number = reward at the field <br />
 <br clear="left"/>
 
 The class Gridworld is implemented in the File [Grid.py](Grid.py). The constructor gets a dictionary with the layout.<br />
-structure of the dictionary: 
+Structure of the dictionary: 
 * x_dim (int>0) : x dimension of gridworld    
 *  y_dim (int>0) : y dimension of gridworld   
 * epsilon (0<float<1) : for epsilon-greedy state transition function   
@@ -53,13 +53,13 @@ Start the learning process with the start method. As parameters it gets the amou
 list of the average return, total return and steps per episode
 <br clear="left"/>
 <img src="Images/Figure_returns_for_README.png" alt="plot of returns" align="left" width="350"/>
-plot of the total return and steps per episode ( The plot does only work if `visualize_policy = False`)
+plot of the total return and steps per episode (The plot does only work if `visualize_policy = False`)
 <br clear="left"/>
 
 ## How to execute
 First you have to clone the repository.
 You can use or modify Main_SARSA.py and execute it in the terminal.<br />
-Imports
+**Imports**:
 ```python
 import matplotlib.pyplot as plt
 import numpy as np
@@ -67,7 +67,7 @@ import SARSAn
 import Grid
 import Gridworlds
 ```
-Creation of the Gridworld
+**Creation of the Gridworld**:
 ```python
 which_gridworld = 0
 world = Grid.Gridworld(Gridworlds.Gridworlds.GRIDWORLD[which_gridworld])
@@ -75,14 +75,14 @@ world.visualize()
 ```
 Decide which default world by changing `which_gridworld` to any value between 0 and 4. The gridworld on the picture above is gridworld 0. <br />
 
-Creation of player and learning start
+**Creation of player and learning start**: 
 ``` python
 player = SARSAn.SARSAn(
 	gridworld=world, 
 	n=10, epsilon=0.5, 
 	decreasing_epsilon = True, 
 	gamma = 0.99, 
-	alpha = 0.3, 
+	alpha = 0.3,
 	visualize_policy = False, 
 	visualize_grid = True)
 player.start(episodes = 50, evaluation = True)
@@ -93,7 +93,7 @@ Create an MonteCarlo approach by executing this instead of the last cell.
 player = SARSAn.SARSAn(gridworld=world,n = np.inf, epsilon= 0.3,alpha = 1)
 player.start(episodes = 50, evaluation = True)
 ```
-You can export your pyplot plots by executing the following lines after the learning is done. (Only the plots you will see during learning will be in the picture)
+You can export your pyplot plots by executing the following lines after the learning is done (Only the plots you will see during learning will be in the picture).
 ``` python
 plt.savefig("Figure_SARSA_policy_returns.png")
 ```

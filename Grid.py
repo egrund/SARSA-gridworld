@@ -35,6 +35,16 @@ class Gridworld:
     State transition function: 
         take random action with probabilitiy epsilon
         take given action with probabilitiy 1- epsilon
+
+    Attributes:
+        x_dim (int>0) : x dimension of gridworld
+        y_dim (int>0) : y dimension of gridworld
+        epsilon (0<float<1) : for epsilon-greedy state transition function
+        agent (list) : [y,x] coordinates of the current agent
+        initial_agent (list) : [y,x] coordinates of the starting state
+        terminal (list) : [y,x] coordinates of the terminal state
+        action (list) : list of all the possible actions in order as strings
+        world (2D list) : [y][x] with values for all states being int for rewards and np.NaN for barriers
     """
     
     def __init__(self,gridworld = Gridworlds.Gridworlds.GRIDWORLD1):
@@ -53,7 +63,7 @@ class Gridworld:
         #  0  0  X  0  0
         # -1  0  0  0 -1
         
-        Attributes all keys in the dictionary gridworld:
+        Keys in the dictionary gridworld:
             x_dim (int>0) : x dimension of gridworld
             y_dim (int>0) : y dimension of gridworld
             epsilon (0<float<1) : for epsilon-greedy state transition function
@@ -109,7 +119,7 @@ class Gridworld:
     # methods
     def isValid(self,x,y):
         """
-        checks whether coordinates are in the gridworld and not on a barrier
+        checks whether coordinates x,y are in the gridworld and not on a barrier
         """
         # check whether in the Gridworld
         if(x>=0 and x<self.x_dim and y>= 0 and y<self.y_dim):
@@ -125,7 +135,6 @@ class Gridworld:
         if self.agent == self.terminal: # [y,x]
             return True
         return False
-        
         
     def reset(self):
         """
@@ -149,10 +158,10 @@ class Gridworld:
         
         # state transition policy
         # check whether action or for epsilon random other one
-        take_action = np.random.choice([True,False],p=[1-self.epsilon, self.epsilon])
+        take_greedy_action = np.random.choice([True,False],p=[1-self.epsilon, self.epsilon])
         
         # take random action
-        if (not take_action):
+        if (not take_greedy_action):
             action = np.random.choice(len(self.action))
             
         # get new place after action
@@ -166,7 +175,7 @@ class Gridworld:
         elif action == 3: # right
             x += 1
            
-        # gets the reward later
+        # basic reward in case no other for each step
         reward = -0.1 # for eachs step done
         
         # check if action is valid, then do action
@@ -174,10 +183,9 @@ class Gridworld:
             self.agent = [y,x]
             reward = self.world[self.agent[0],self.agent[1]]
         else:
-            # for invalid move (on barrier or outside of gridworld)
+            # invalid
             reward = -0.5
-        
-        # return state of agent, reward, if new state is terminal
+    
         return self.agent, reward , self.inTerminal()
         
         
@@ -191,6 +199,7 @@ class Gridworld:
         
         for y in range(self.y_dim):
             
+            # left side y values
             firstLine = "    ||"
             thisLine = ("      " + str(y) + " ||")[-6:]
             nextLine =  "____||"
@@ -198,7 +207,7 @@ class Gridworld:
             for x in range(self.x_dim):
                 val = self.world[y,x]
                 
-                # print one field if agent is there
+                # print one field if agent is there or if barrier on bottom line
                 if ([y,x]==self.agent):
                     nextLine += "__A__|"
                 elif np.array_equal(val, np.NaN, equal_nan=True): # if it is a barrier
@@ -206,7 +215,7 @@ class Gridworld:
                 else:
                     nextLine +=  "_____|"
                     
-                # print vlaues on field
+                # print vlaues on field in middle line and first line
                 if (val==0.0): # if 
                     firstLine += "     |"
                     thisLine += "     "
@@ -218,12 +227,11 @@ class Gridworld:
                     thisLine += ( "     " + str(int(val)) )[-5:]
                 thisLine += "|"
                 
-            # print and go to next line
             print(firstLine)
             print(thisLine)
             print(nextLine)
             
-        # at the bottom of the print
+        # at the bottom of the print, pritn x coordinates
         topLine = "____||"
         line = "    ||"
         middleLine = "    ||"

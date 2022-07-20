@@ -19,10 +19,10 @@ Structure of the dictionary:
 * x_dim (int>0) : x dimension of gridworld    
 *  y_dim (int>0) : y dimension of gridworld   
 * epsilon (0<float<1) : for epsilon-greedy state transition function   
-* start [x,y] = starting state of agent for each episode   
-* terminal [x,y] = terminal state with a positive reward   
-* neg_rewards [[x,y,reward],[x,y,reward],...] = list of fields with negative rewards   
-* barrier [[x,y],[x,y],...] = list of fields that are barriers   
+* start [x,y] : starting state of agent for each episode   
+* terminal [x,y] : terminal state with a positive reward   
+* neg_rewards [[x,y,reward],[x,y,reward],...] : list of fields with negative rewards   
+* barrier [[x,y],[x,y],...] : list of fields that are barriers   
 
 There are some hardcoded gridworld dictionaries in the [Gridworlds.py](Gridworlds.py) file(access via class variable `Gridworlds.GRIDWORLD[index]`), but you can also create your own ones.  
 A Gridworld has a starting state, a terminal state (with a positive reward of 10), some other negative rewards and barriers.
@@ -45,14 +45,17 @@ The agent is in the [SARSAn.py](SARSAn.py) file. It is an implementation of the 
 It uses an epsilon-greedy policy with the possibility of decreasing the exploration over time (set `decreasing_epsilon = True`).
 
 <img src="Images/Figure_SARSA_policy_for_README.png" align="left" alt="visualization of the policy" width="400"/>  
+
 If you set `visualize_policy = True`, the q-values will be visualized after each episode as a matplotlib heatmap showing all state-action values.
 <br clear="left"/><br />
 
 Start the learning process with the start method. As parameters it gets the amount of _episodes_ you want to do and if you want an _evaluation_. <br />
 <img src="Images/Gridworld_evaluation_list_for_README.jpg" align="left" alt="list of returns" width="400"/>
+
 list of the average return, total return and steps per episode
 <br clear="left"/>
 <img src="Images/Figure_returns_for_README.png" alt="plot of returns" align="left" width="350"/>
+
 plot of the total return and steps per episode (The plot does only work if `visualize_policy = False`)
 <br clear="left"/>
 

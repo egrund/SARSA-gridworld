@@ -6,7 +6,7 @@
     Python Version: 3.8.12
 '''
 
-import numpy as npd
+import numpy as np
 import os
 import Gridworlds
 

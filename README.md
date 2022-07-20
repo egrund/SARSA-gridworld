@@ -13,7 +13,7 @@ numbers = rewards at the field <br />
 <br clear="left"/>
 
 The class Gridworld is implemented in the File `Grid.py`. The constructor gets a dictionary with the layout.
-There are some hardcoded gridworld dictionaries in the `Gridworlds.py` file(access via class variable `Gridworlds.GRIDWORLD[index]`), to use, but you can also create your own ones.  
+There are some hardcoded gridworld dictionaries in the `Gridworlds.py` file(access via class variable `Gridworlds.GRIDWORLD[index]`), but you can also create your own ones.  
 A Gridworld has a starting state, a terminal state (with a positive reward of 10), some other negative rewards and barriers.
 Possible actions are _up_, _down_, _left_ and _right_.
  
@@ -29,7 +29,7 @@ The gridworld will be visualized via the consol, but because it is always printe
 the old prints can be removed and it stays in the same place.
 
 ## The Agent
-The Agent is in the `SARSAn.py` file. It is an implementation of the reinforcement-learning algorithm [n-step SARSA](https://towardsdatascience.com/introduction-to-reinforcement-learning-rl-part-7-n-step-bootstrapping-6c3006a13265) and can also do 1-step SARSA and MonteCarlo.
+The agent is in the `SARSAn.py` file. It is an implementation of the reinforcement-learning algorithm [n-step SARSA](https://towardsdatascience.com/introduction-to-reinforcement-learning-rl-part-7-n-step-bootstrapping-6c3006a13265) and can also do 1-step SARSA and MonteCarlo.
 
 It uses an epsilon-greedy policy with the possibility of decreasing the exploration over time (set `decreasing_epsilon = True`).
 
@@ -46,7 +46,7 @@ plot of the total return and steps per episode ( The plot does only work if `vis
 <br clear="left"/>
 
 ## How to execute
-You can use or modify Main_SARSA.py and execute it in the terminal.
+You can use or modify Main_SARSA.py and execute it in the terminal.<br />
 Imports
 ```python
 import matplotlib.pyplot as plt
@@ -78,7 +78,7 @@ player.start(episodes = 50, evaluation = True)
 That means it is an 10-step SARSA solving Gridworld 0 (the one on the pictures). You can change all of the parameters and see what happens. But changing them cause the algorithm to be inefficient or even failing.<br />
 Create an MonteCarlo approach by executing this instead of the last cell.
 ``` python
-player = SARSAn(gridworld=world,n = np.inf, epsilon= 0.05,alpha = 1)
+player = SARSAn.SARSAn(gridworld=world,n = np.inf, epsilon= 0.05,alpha = 1)
 player.start(episodes = 50, evaluation = True)
 ```
 You can export your pyplot plots by executing the following lines after the learning is done. (Only the plots you will see during learning will be in the picture)

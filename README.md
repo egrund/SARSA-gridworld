@@ -4,7 +4,6 @@ It was created for the course _Deep reinforcement learning_ <br />
 Author: Eosandra Grund <br />
 Date last modified: 20.07.2022 <br />
 Sample execution code in [Main_SARSA.py](Main_SARSA.py), execute in shell. <br />
-Documentation created with pdoc3 in folder documentation.
 
 ## The Gridworld
 <img src="Images/Gridworld_at_start_for_README.jpg" align="left" alt="Viszalization of the gridworld" width="300"/>

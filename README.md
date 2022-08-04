@@ -1,6 +1,6 @@
 # SARSA-gridworld
 This is an implementation of n-step SARSA and a gridworld to be solved by it. <br />
-It was created for the course _Deep reinforcement learning_ <br />
+It was created for the course _Deep reinforcement learning_ (at UOS) <br />
 Author: Eosandra Grund <br />
 Date last modified: 20.07.2022 <br />
 Sample execution code in [Main_SARSA.py](Main_SARSA.py), execute in shell. <br />

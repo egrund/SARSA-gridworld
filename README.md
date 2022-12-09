@@ -6,7 +6,7 @@ Date last modified: 20.07.2022 <br />
 Sample execution code in [Main_SARSA.py](Main_SARSA.py), execute in shell. <br />
 
 ## The Gridworld
-<img src="Images/Gridworld_at_start_for_README.jpg" align="left" alt="Viszalization of the gridworld" width="300"/>
+<img src="Images/Gridworld_at_start_for_README.jpg" align="left" alt="Visualization of the gridworld" width="300"/>
 double lines are the end of the gridworld, behind that (first row and last line) are x and y values <br />
 A = Agent <br />
 X = barrier <br />
